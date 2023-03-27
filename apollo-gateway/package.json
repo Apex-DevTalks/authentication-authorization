@@ -1,0 +1,36 @@
+{
+  "name": "devtalk-apollo-gateway",
+  "version": "1.0.0",
+  "description": "DevTalk Apollo Server &amp; Gateway",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "compile": "tsc",
+    "start": "npm run compile && node ./dist/index.js",
+    "update-schema": "rover supergraph compose --config ./supergraph-config.yaml > supergraph.graphql --elv2-license accept",
+    "router": "router --dev --config router.yaml --supergraph supergraph.graphql"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Apex-DevTalks/apollo-federation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Apex-DevTalks/apollo-federation/issues"
+  },
+  "homepage": "https://github.com/Apex-DevTalks/apollo-federation#readme",
+  "dependencies": {
+    "@apollo/gateway": "^2.2.2",
+    "@apollo/server": "^4.3.0",
+    "fs": "0.0.1-security",
+    "graphql": "^16.6.0",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@apollo/rover": "^0.10.0",
+    "@types/node": "^18.11.18",
+    "typescript": "^4.9.4"
+  }
+}

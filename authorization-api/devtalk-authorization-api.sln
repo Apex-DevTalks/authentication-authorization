@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevTalk.Authorization.Api", "DevTalk.Authorization.Api\DevTalk.Authorization.Api.csproj", "{F4413E42-6ADC-4B94-A984-94078D4C82CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApolloGraphQLFederationExtensions", "ApolloGraphQLFederationExtensions\ApolloGraphQLFederationExtensions.csproj", "{32A7FD2E-E753-4B5B-A829-5C9E4E0F7C14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevTalk.Authorization.Model", "DevTalk.Authorization.Model\DevTalk.Authorization.Model.csproj", "{5CB9BEDE-269E-42FF-9312-362FBD151186}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F4413E42-6ADC-4B94-A984-94078D4C82CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4413E42-6ADC-4B94-A984-94078D4C82CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4413E42-6ADC-4B94-A984-94078D4C82CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4413E42-6ADC-4B94-A984-94078D4C82CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32A7FD2E-E753-4B5B-A829-5C9E4E0F7C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32A7FD2E-E753-4B5B-A829-5C9E4E0F7C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32A7FD2E-E753-4B5B-A829-5C9E4E0F7C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32A7FD2E-E753-4B5B-A829-5C9E4E0F7C14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CB9BEDE-269E-42FF-9312-362FBD151186}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CB9BEDE-269E-42FF-9312-362FBD151186}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CB9BEDE-269E-42FF-9312-362FBD151186}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CB9BEDE-269E-42FF-9312-362FBD151186}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
