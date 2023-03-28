@@ -40,7 +40,7 @@ public partial class AppQueries : FederatedQuery
             "authorization_getDataAsVisitor",
             resolve: ctx => 
             {
-                return new MyCustomTypeDTO() { Id = 12345, DateCreated = DateTime.Now };
+                return new MyCustomTypeDTO() { Id = 123, DateCreated = DateTime.Now };
             }
         ).AuthorizeWith("VisitorPolicy");
         
