@@ -8,7 +8,7 @@ public class MyQuery : FederatedQuery
     public MyQuery()
     {
         Field<MyCustomType>(
-            "accounts_GetMyCustomType",
+            "accounts_getDataAnonymously",
             resolve: ctx => {
                 return new MyCustomTypeDTO() { Id = 456, DateCreated = DateTime.Now };
             }
