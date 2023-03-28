@@ -37,15 +37,15 @@ public partial class AppQueries : FederatedQuery
         );
 
         Field<MyCustomType>(
-            "authorization_getMyCustomType",
+            "authorization_getDataAsVisitor",
             resolve: ctx => 
             {
-                return new MyCustomTypeDTO() { Id = 123, DateCreated = DateTime.Now };
+                return new MyCustomTypeDTO() { Id = 12345, DateCreated = DateTime.Now };
             }
-        ).AuthorizeWith("MyPolicy");
+        ).AuthorizeWith("VisitorPolicy");
         
         Field<StringGraphType>(
-            "authorization_protectedByAdminRole",
+            "authorization_getDataAsAdmin",
             resolve: ctx => {
                 return "Success!";
             }

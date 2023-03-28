@@ -95,7 +95,7 @@ builder.Services.AddGraphQL(options => {
 .AddFederation(typeof(MySchema).Assembly)
 .AddUserContextBuilder(httpContext => new MyGraphQLUserContext(httpContext.User))
 .AddGraphQLAuthorization(options => {
-    options.AddPolicy("MyPolicy", policy => policy.RequireAuthenticatedUser());
+    options.AddPolicy("VisitorPolicy", policy => policy.RequireAuthenticatedUser());
     options.AddPolicy("AdminPolicy", policy => policy.RequireRole("admin"));
 });
 
