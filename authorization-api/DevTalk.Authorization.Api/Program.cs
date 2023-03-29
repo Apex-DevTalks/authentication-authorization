@@ -20,8 +20,9 @@ builder.Logging.ClearProviders().AddConsole();
 
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
 
+// WARNING: REMOVE THE OPTION "TrustServerCertificate=True". IT'S FOR TESTING PURPOSES ONLY!!
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer("Server=.;Database=DevTalkApolloFederation;Trusted_Connection=True;MultipleActiveResultSets=true"));
+                options.UseSqlServer("Server=.;Database=DevTalkApolloFederation;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true"));
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()

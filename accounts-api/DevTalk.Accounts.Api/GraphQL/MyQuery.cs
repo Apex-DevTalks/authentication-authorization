@@ -3,15 +3,11 @@ using GraphQL.Types;
 
 namespace DevTalk.Accounts.Api.GraphQL;
 
-public class MyQuery : FederatedQuery
+public partial class AppQueries : FederatedQuery
 {
-    public MyQuery()
+    public AppQueries()
     {
-        Field<MyCustomType>(
-            "accounts_getDataAnonymously",
-            resolve: ctx => {
-                return new MyCustomTypeDTO() { Id = 456, DateCreated = DateTime.Now };
-            }
-        );
+        AccountQueries();
+        HeroQueries();
     }
 }
