@@ -22,7 +22,8 @@ var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?
 
 // WARNING: REMOVE THE OPTION "TrustServerCertificate=True". IT'S FOR TESTING PURPOSES ONLY!!
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer("Server=.;Database=DevTalkApolloFederation;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true"));
+                // options.UseSqlServer("Server=.;Database=DevTalkApolloFederation;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true"));
+                options.UseSqlServer("Server=.;Database=Project2;TrustServerCertificate=True;Trusted_Connection=True;MultipleActiveResultSets=true"));
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
@@ -44,6 +45,29 @@ builder.Services.AddIdentityServer()
                 StandardScopes.Profile,
                 "role",
                 "DevTalk.Authorization.ApiAPI"
+            }
+        });
+        options.Clients.Add(new Client
+        {
+            ClientName = "oidc-pkce",
+            ClientId = "t8agr5xKt4$4",
+            AllowedGrantTypes = IdentityServer4.Models.GrantTypes.Code,
+            RequirePkce = true,
+            RequireClientSecret = false,
+            AllowedScopes = {
+                StandardScopes.OpenId,
+                StandardScopes.Profile,
+                "role",
+                "DevTalk.Authorization.ApiAPI"
+            },
+            RedirectUris = {
+                "http://localhost:3000/Dashboard",
+            },
+            PostLogoutRedirectUris = {
+                "http://localhost:3000"
+            },
+            AllowedCorsOrigins = {
+                "http://localhost:3000"
             }
         });
         options.IdentityResources.Add(new IdentityResource()
@@ -100,9 +124,20 @@ builder.Services.AddGraphQL(options => {
     options.AddPolicy("AdminPolicy", policy => policy.RequireRole("admin"));
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000");
+        });
+});
+
 builder.Services.AddSingleton<MySchema>();
 
 builder.Services.AddHttpClient<IIdentityService, IdentityService>();
+
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -110,14 +145,20 @@ if (app.Environment.IsDevelopment())
 {
     app.UseGraphQLPlayground("/graphql/playground");
 }
-// Comment this out for testing purposes
-// app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseAuthentication();
+app.UseRouting();
+
+app.UseCors();
 
 app.UseIdentityServer();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
+
+app.MapRazorPages();
 
 app.UseGraphQL<MySchema>();
 
