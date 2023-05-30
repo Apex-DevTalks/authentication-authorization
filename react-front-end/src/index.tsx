@@ -29,7 +29,7 @@ const oidcConfig = {
   client_id: 't8agr5xKt4$4',
   authority: 'https://localhost:4001',
   redirect_uri: 'http://localhost:3000/Dashboard',
-  scope: 'openid profile role Elsaas.Authorization.ApiAPI'
+  scope: 'openid profile role DevTalk.Authorization.ApiAPI'
 }
 
 const queryClient = new QueryClient()
