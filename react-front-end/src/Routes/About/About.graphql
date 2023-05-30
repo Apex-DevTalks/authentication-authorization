@@ -1,0 +1,6 @@
+query about_page_data {
+    authorization_getDataAsVisitor {
+        id
+        dateCreated
+    }
+}
