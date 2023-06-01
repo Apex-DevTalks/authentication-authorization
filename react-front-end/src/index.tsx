@@ -28,8 +28,8 @@ const client = new ApolloClient({
 const oidcConfig = {
   client_id: 't8agr5xKt4$4',
   authority: 'https://localhost:4001',
-  redirect_uri: 'http://localhost:3000/Dashboard',
-  scope: 'openid profile role DevTalk.Authorization.ApiAPI'
+  redirect_uri: 'http://localhost:3000',
+  scope: 'openid profile role DevTalk.Authorization.ApiAPI AccountsApi'
 }
 
 const queryClient = new QueryClient()

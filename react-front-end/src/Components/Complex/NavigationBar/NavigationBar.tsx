@@ -8,7 +8,7 @@ export default function NavigationBar (): JSX.Element {
   return (
     <>
       <div className="w-full pt-3 pb-3 sticky shadow-lg top-0 bg-slate-200 flex flex-row justify-evenly border-t border-t-slate-900 border-b border-b-slate-900">
-        <p>E-Learning</p>
+        <Link to={'/'}>E-Learning</Link>
         <SearchBar width={'500px'} placeholder={'Buscar cualquier cosa'} />
         <div className="flex justify-between w-60">
           <Link to={'/about'}>About</Link>

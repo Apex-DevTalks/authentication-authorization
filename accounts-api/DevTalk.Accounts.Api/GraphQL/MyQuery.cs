@@ -8,6 +8,6 @@ public partial class AppQueries : FederatedQuery
     public AppQueries()
     {
         AccountQueries();
-        HeroQueries();
+        CourseQueries();
     }
 }

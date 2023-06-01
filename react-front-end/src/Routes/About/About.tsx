@@ -1,28 +1,11 @@
-/* eslint-disable indent */
-import { useAbout_Page_DataQuery } from '../../GraphQL/graphql'
-import { useAuth } from 'react-oidc-context'
+import Card from '../../Components/Complex/Card/Card'
 
 export default function About (): JSX.Element {
-  const x = useAbout_Page_DataQuery().data?.authorization_getDataAsVisitor
-  const auth = useAuth()
-
-  switch (auth.activeNavigator) {
-    case 'signinSilent':
-      return <div>Signing you in...</div>
-    case 'signoutRedirect':
-      return <div>Signing you out...</div>
-  }
-
-  if (auth.isLoading) {
-    return <p>Loading...</p>
-  } else if (auth.isAuthenticated) {
-    return (
-      <div>
-        <p>Id is: {x?.id}</p>
-        <p>Date created: {x?.dateCreated}</p>
-      </div>
-    )
-  } else {
-    return <></>
-  }
+  return (
+    <div className='w-full flex flex-col items-center'>
+      <Card width={'400px'} height={'200px'} title='About' >
+        <p>DevTalk: Authentication & Authorization in .NET Core using IdentityServer4 + React with PKCE</p>
+      </Card>
+    </div>
+  )
 }

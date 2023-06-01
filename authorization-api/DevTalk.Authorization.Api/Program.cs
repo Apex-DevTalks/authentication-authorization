@@ -22,8 +22,7 @@ var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?
 
 // WARNING: REMOVE THE OPTION "TrustServerCertificate=True". IT'S FOR TESTING PURPOSES ONLY!!
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                // options.UseSqlServer("Server=.;Database=DevTalkApolloFederation;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true"));
-                options.UseSqlServer("Server=.;Database=Project2;TrustServerCertificate=True;Trusted_Connection=True;MultipleActiveResultSets=true"));
+                options.UseSqlServer("Server=.;Database=DevTalkApolloFederation;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true"));
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
@@ -34,6 +33,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddIdentityServer()
     .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
     {
+        options.ApiResources.Add(new ApiResource("AccountsApi"));
+        options.ApiScopes.Add(new ApiScope("AccountsApi"));
         options.Clients.Add(new Client
         {
             ClientName = "Client Application1",
@@ -58,10 +59,11 @@ builder.Services.AddIdentityServer()
                 StandardScopes.OpenId,
                 StandardScopes.Profile,
                 "role",
-                "DevTalk.Authorization.ApiAPI"
+                "DevTalk.Authorization.ApiAPI",
+                "AccountsApi"
             },
             RedirectUris = {
-                "http://localhost:3000/Dashboard",
+                "http://localhost:3000",
             },
             PostLogoutRedirectUris = {
                 "http://localhost:3000"
@@ -120,7 +122,7 @@ builder.Services.AddGraphQL(options => {
 .AddFederation(typeof(MySchema).Assembly)
 .AddUserContextBuilder(httpContext => new MyGraphQLUserContext(httpContext.User))
 .AddGraphQLAuthorization(options => {
-    options.AddPolicy("VisitorPolicy", policy => policy.RequireAuthenticatedUser());
+    options.AddPolicy("AuthenticatedUserPolicy", policy => policy.RequireAuthenticatedUser());
     options.AddPolicy("AdminPolicy", policy => policy.RequireRole("admin"));
 });
 
@@ -145,6 +147,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseGraphQLPlayground("/graphql/playground");
 }
+app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseAuthentication();
