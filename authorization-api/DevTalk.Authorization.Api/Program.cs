@@ -33,6 +33,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddIdentityServer()
     .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
     {
+        options.ApiResources.Add(new ApiResource("AccountsApi"));
+        options.ApiScopes.Add(new ApiScope("AccountsApi"));
         options.Clients.Add(new Client
         {
             ClientName = "Client Application1",
@@ -44,6 +46,30 @@ builder.Services.AddIdentityServer()
                 StandardScopes.Profile,
                 "role",
                 "DevTalk.Authorization.ApiAPI"
+            }
+        });
+        options.Clients.Add(new Client
+        {
+            ClientName = "oidc-pkce",
+            ClientId = "t8agr5xKt4$4",
+            AllowedGrantTypes = IdentityServer4.Models.GrantTypes.Code,
+            RequirePkce = true,
+            RequireClientSecret = false,
+            AllowedScopes = {
+                StandardScopes.OpenId,
+                StandardScopes.Profile,
+                "role",
+                "DevTalk.Authorization.ApiAPI",
+                "AccountsApi"
+            },
+            RedirectUris = {
+                "http://localhost:3000",
+            },
+            PostLogoutRedirectUris = {
+                "http://localhost:3000"
+            },
+            AllowedCorsOrigins = {
+                "http://localhost:3000"
             }
         });
         options.IdentityResources.Add(new IdentityResource()
@@ -96,13 +122,24 @@ builder.Services.AddGraphQL(options => {
 .AddFederation(typeof(MySchema).Assembly)
 .AddUserContextBuilder(httpContext => new MyGraphQLUserContext(httpContext.User))
 .AddGraphQLAuthorization(options => {
-    options.AddPolicy("VisitorPolicy", policy => policy.RequireAuthenticatedUser());
+    options.AddPolicy("AuthenticatedUserPolicy", policy => policy.RequireAuthenticatedUser());
     options.AddPolicy("AdminPolicy", policy => policy.RequireRole("admin"));
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000");
+        });
 });
 
 builder.Services.AddSingleton<MySchema>();
 
 builder.Services.AddHttpClient<IIdentityService, IdentityService>();
+
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -110,14 +147,21 @@ if (app.Environment.IsDevelopment())
 {
     app.UseGraphQLPlayground("/graphql/playground");
 }
-// Comment this out for testing purposes
-// app.UseHttpsRedirection();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.UseAuthentication();
+app.UseRouting();
+
+app.UseCors();
 
 app.UseIdentityServer();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
+
+app.MapRazorPages();
 
 app.UseGraphQL<MySchema>();
 

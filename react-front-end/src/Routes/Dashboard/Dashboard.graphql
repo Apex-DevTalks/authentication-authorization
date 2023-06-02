@@ -1,0 +1,10 @@
+query courses_data {
+    accounts_getAllCourses {
+        id
+        courseName
+        professorName
+        description
+        imageURL
+        lastEditionDate
+    }
+}
